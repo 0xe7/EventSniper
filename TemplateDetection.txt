@@ -1,0 +1,47 @@
+using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
+
+namespace KerberosEventKiller
+{
+    public class DETECTION_NAME : BaseDetection
+    {
+        public override string eventQueryString { get => "XPATH_QUERY"; }
+
+        public override void Check(Dictionary<string, string> args)
+        {
+            Output.WriteConsole("[*] Starting SHORT_DETECTION_DESCRIPTION detection");
+
+            var tasks = GetReaderTasks(args);
+
+            if (null == tasks)
+            {
+                return;
+            }
+            Output.WriteConsole("");
+
+            // do stuff
+        }
+
+        public override List<object> ParseEvents(EventLogReader reader, string dc)
+        {
+            var returnedRequests = new List<object>();
+            int count = 0;
+
+            Output.WriteConsole($"[*] Reading events from {dc}");
+
+            EventRecord eventRecord = reader.ReadEvent();
+            while (eventRecord != null)
+            {
+                count += 1;
+
+                // do stuff
+
+                eventRecord = reader.ReadEvent();
+            }
+
+            Output.WriteConsole($"[*] Read {count} events from {dc}");
+
+            return returnedRequests;
+        }
+    }
+}
